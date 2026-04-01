@@ -238,7 +238,7 @@ impl Tensor {
                     }
                     #[cfg(feature = "cuda")]
                     Device::Cuda(device) => {
-                        let mut slice = unsafe { device.alloc::<u8>(data.len())? };
+                        let mut slice = device.alloc_zeros::<u8>(data.len())?;
                         device.memcpy_htod(data, &mut slice)?;
 
                         let slice = match dtype {
@@ -338,7 +338,7 @@ fn convert_dummy(view: &st::TensorView<'_>, device: &Device) -> Result<Tensor> {
         }
         #[cfg(feature = "cuda")]
         Device::Cuda(device) => {
-            let mut slice = unsafe { device.alloc::<u8>(data.len())? };
+            let mut slice = device.alloc_zeros::<u8>(data.len())?;
             device.memcpy_htod(data, &mut slice)?;
 
             let slice = match dtype {

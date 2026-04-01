@@ -390,12 +390,12 @@ impl BackendDevice for CudaDevice {
             })
             .w()?,
             DType::F32 => {
-                let mut data = unsafe { self.alloc::<f32>(elem_count)? };
+                let mut data = self.alloc_zeros::<f32>(elem_count)?;
                 curand.0.fill_with_uniform(&mut data).w()?;
                 CudaStorageSlice::F32(data)
             }
             DType::F64 => {
-                let mut data = unsafe { self.alloc::<f64>(elem_count)? };
+                let mut data = self.alloc_zeros::<f64>(elem_count)?;
                 curand.0.fill_with_uniform(&mut data).w()?;
                 CudaStorageSlice::F64(data)
             }
@@ -445,7 +445,7 @@ impl BackendDevice for CudaDevice {
             })
             .w()?,
             DType::F32 => {
-                let mut data = unsafe { self.alloc::<f32>(elem_count_round)? };
+                let mut data = self.alloc_zeros::<f32>(elem_count_round)?;
                 curand
                     .0
                     .fill_with_normal(&mut data, mean as f32, std as f32)
@@ -453,7 +453,7 @@ impl BackendDevice for CudaDevice {
                 CudaStorageSlice::F32(data)
             }
             DType::F64 => {
-                let mut data = unsafe { self.alloc::<f64>(elem_count_round)? };
+                let mut data = self.alloc_zeros::<f64>(elem_count_round)?;
                 curand.0.fill_with_normal(&mut data, mean, std).w()?;
                 CudaStorageSlice::F64(data)
             }
@@ -475,43 +475,43 @@ impl BackendDevice for CudaDevice {
         let elem_count = shape.elem_count();
         let slice = match dtype {
             DType::U8 => {
-                let data = self.alloc::<u8>(elem_count)?;
+                let data = self.alloc_zeros::<u8>(elem_count)?;
                 CudaStorageSlice::U8(data)
             }
             DType::U32 => {
-                let data = self.alloc::<u32>(elem_count)?;
+                let data = self.alloc_zeros::<u32>(elem_count)?;
                 CudaStorageSlice::U32(data)
             }
             DType::I16 => {
-                let data = self.alloc::<i16>(elem_count)?;
+                let data = self.alloc_zeros::<i16>(elem_count)?;
                 CudaStorageSlice::I16(data)
             }
             DType::I32 => {
-                let data = self.alloc::<i32>(elem_count)?;
+                let data = self.alloc_zeros::<i32>(elem_count)?;
                 CudaStorageSlice::I32(data)
             }
             DType::I64 => {
-                let data = self.alloc::<i64>(elem_count)?;
+                let data = self.alloc_zeros::<i64>(elem_count)?;
                 CudaStorageSlice::I64(data)
             }
             DType::BF16 => {
-                let data = self.alloc::<bf16>(elem_count)?;
+                let data = self.alloc_zeros::<bf16>(elem_count)?;
                 CudaStorageSlice::BF16(data)
             }
             DType::F16 => {
-                let data = self.alloc::<f16>(elem_count)?;
+                let data = self.alloc_zeros::<f16>(elem_count)?;
                 CudaStorageSlice::F16(data)
             }
             DType::F32 => {
-                let data = self.alloc::<f32>(elem_count)?;
+                let data = self.alloc_zeros::<f32>(elem_count)?;
                 CudaStorageSlice::F32(data)
             }
             DType::F64 => {
-                let data = self.alloc::<f64>(elem_count)?;
+                let data = self.alloc_zeros::<f64>(elem_count)?;
                 CudaStorageSlice::F64(data)
             }
             DType::F8E4M3 => {
-                let data = self.alloc::<F8E4M3>(elem_count)?;
+                let data = self.alloc_zeros::<F8E4M3>(elem_count)?;
                 CudaStorageSlice::F8E4M3(data)
             }
             DType::F6E2M3 | DType::F6E3M2 | DType::F4 | DType::F8E8M0 => {
